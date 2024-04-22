@@ -91,10 +91,12 @@ if [ -d "${prefix}/conda-meta" ] ||
     : # conda doesn't support fish
     ;;
   * )
-    for script in "${prefix}/etc/conda/deactivate.d"/*.sh; do
+    base_prefix="${prefix%/envs/*}"
+    for script in "${base_prefix}/etc/conda/deactivate.d"/*.sh; do
       echo ". \"${script}\";"
     done
     echo "unset CONDA_PREFIX"
+    unset base_prefix
     ;;
   esac
   shopt -u nullglob
